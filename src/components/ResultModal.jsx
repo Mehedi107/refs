@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+
 const ResultModal = ({
   result,
   targetTime,
@@ -8,7 +10,7 @@ const ResultModal = ({
   const userLost = timeRemaining <= 0;
   const formattedTime = (timeRemaining / 1000).toFixed(2);
   const score = Math.round((1 - timeRemaining / (targetTime * 1000)) * 100);
-  return (
+  return createPortal(
     <dialog className="result-modal" ref={ref}>
       {userLost && <h2>You {result}</h2>}
       {!userLost && <h2>Your Score: {score}</h2>}
@@ -21,7 +23,8 @@ const ResultModal = ({
       <form method="dialog" onSubmit={resetTimer}>
         <button>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById('modal')
   );
 };
 
